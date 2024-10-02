@@ -1,14 +1,13 @@
 import express from "express";
-
+import {bookController} from "../controllers/index.js";
 const router = express.Router();
-const { userController } = controllers;
-
-router.get("/:id", (req, res) => {
-    res.send(`You requested a book with id ${req.params.id}`);
-});
 
 router.get("/", (req, res) => {
-    res.send("You requested a list of books");
+    bookController.getAllBook(req, res);
+});
+
+router.get("/:id", (req, res) => {
+    bookController.getBookById(req, res);
 });
 
 router.post("/", (req, res) => {

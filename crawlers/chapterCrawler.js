@@ -29,7 +29,7 @@ const chapterCrawler = async (chapterUrl) => {
       pages: chapterPages,
     };
 
-    print("Chapter Data: " + JSON.stringify(chapterData, null, 2), OutPutType.INFO);
+    // print("Chapter Data: " + JSON.stringify(chapterData, null, 2), OutPutType.INFO);
     return chapterData; // Return the chapter data as JSON
 
   } catch (error) {

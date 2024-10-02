@@ -2,6 +2,9 @@ import express from 'express';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
+// routes import
+import {bookRouter} from './routes/index.js';
+
 import connect from './database/database.js';
 
 const PORT = process.env.PORT || 3000;
@@ -9,6 +12,8 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use('/books', bookRouter);
 
 app.get('/', (req, res) => {
     res.send('Hello World!');

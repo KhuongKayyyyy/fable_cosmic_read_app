@@ -1,0 +1,1 @@
+export const MAX_BOOKS_PER_PAGE = 10;

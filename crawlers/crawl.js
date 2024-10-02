@@ -3,17 +3,26 @@ import mongoose from 'mongoose';
 import connect from '../database/database.js';
 import { Book, Chapter } from '../models/index.js';
 import { print, OutPutType } from '../helpers/print.js';
+import { bookRepository } from '../repositories/index.js';
 import dotenv from 'dotenv';
 import chapterCrawler  from './chapterCrawler.js'; 
+import book from '../repositories/book.js';
 dotenv.config();
 
 const cosmicList = [
-  // "https://nettruyenww.com/truyen-tranh/hunter-x-hunter-227",
-  // "https://nettruyenww.com/truyen-tranh/dai-chien-nguoi-khong-lo-462",
-  // "https://nettruyenww.com/truyen-tranh/mar-22717",
-  // "https://nettruyenww.com/truyen-tranh/de-vuong-hoi-quy-23412",
-  // "https://nettruyenww.com/truyen-tranh/shinobi-undercover-25960",
+  "https://nettruyenviet.com/truyen-tranh/dai-chien-nguoi-khong-lo",
+  "https://nettruyenviet.com/truyen-tranh/mar",
+  "https://nettruyenviet.com/truyen-tranh/thanh-guom-diet-quy",
+  "https://nettruyenviet.com/truyen-tranh/giai-dau-giua-cac-vu-tru-song-song",
+  "https://nettruyenviet.com/truyen-tranh/bleach-full-color",
   "https://nettruyenviet.com/truyen-tranh/hunter-x-hunter",
+  "https://nettruyenviet.com/truyen-tranh/one-piece",
+  "https://nettruyenviet.com/truyen-tranh/the-promised-neverland",
+  "https://nettruyenviet.com/truyen-tranh/vua-bong-da",
+  "https://nettruyenviet.com/truyen-tranh/van-co-chi-ton",
+  "https://nettruyenviet.com/truyen-tranh/onepunch-man",
+  "https://nettruyenviet.com/truyen-tranh/dai-tieu-thu-sao-phai-gia-nam",
+  "https://nettruyenviet.com/truyen-tranh/naruto"
 ];
 
 (async () => {
@@ -33,9 +42,11 @@ const cosmicList = [
         const authorElement = document.querySelector('.author .col-xs-8');
         const statusElement = document.querySelector('.status .col-xs-8');
         const genresElement = document.querySelector('.kind .col-xs-8');
+        const imgElement = document.querySelector('.col-image img');
         const viewCountElement = document.querySelector('.row p.col-xs-8'); 
         return {
           title: titleElement ? titleElement.textContent.trim() : null,
+          thumbnail: imgElement ? imgElement.src : null,
           author: authorElement ? authorElement.textContent.trim() : null,
           status: statusElement ? statusElement.textContent.trim() : null,
           genres: genresElement ? genresElement.textContent.trim() : null,
@@ -43,17 +54,10 @@ const cosmicList = [
         };
       });
 
-      console.log('Book Info:', bookInfo);
-      const book = new Book({
-        name: bookInfo.title,
-        genres: bookInfo.genres.split(' - ').map(genre => genre.trim()),
-        viewCount: 0,
-        status: bookInfo.status || "Đang tiến hành",
-        author: bookInfo.author,
-        chapters: []
-      });
-      await book.save();
-      print(`Saved book ${book.name}`, OutPutType.SUCCESS);
+      // console.log('Book Info:', bookInfo);
+
+      let newBook = await bookRepository.insertBook({name: bookInfo.title, thumbnail: bookInfo.thumbnail, genre: bookInfo.genres.split(' - ').map(genre => genre.trim()), viewCount: bookInfo.viewCount, author: bookInfo.author, status: bookInfo.status || "Đang tiến hành", chapters: []});
+      print(`Saved book ${newBook.name}`, OutPutType.SUCCESS);
     
       // Extract chapter links
       const chapters = await page.$$eval('#nt_listchapter .row .chapter a', elements => 
@@ -62,27 +66,28 @@ const cosmicList = [
           url: el.href
         }))
       );
-      console.log('Chapters:', chapters);
+      // console.log('Chapters:', chapters);
 
       // Limit the number of chapters to scrape
-      const limitedChapters = chapters.slice(0, 3);
-
       let chapterList = [];
-      // Add the chapters to the book
+      // Limit the number of chapters to scrape to 10
+      const limitedChapters = chapters.slice(0, 20);
+      
+      // Add limited chapters to the book
       for (const chapter of limitedChapters) {
         const chapterData = await chapterCrawler(chapter.url);
         if (chapterData) {
           const newChapter = new Chapter({
-            title: chapterData.title,
-            pages: chapterData.pages
+        title: chapterData.title,
+        pages: chapterData.pages
           });
           await newChapter.save();
           chapterList.push(newChapter);
         }
       }
-      book.chapters = chapterList;
-      await book.save();
-      print(`Updated book ${book.name} with chapters`, OutPutType.SUCCESS);
+      newBook.chapters = chapterList;
+      await newBook.save();
+      print(`Updated book ${newBook.name} with chapters`, OutPutType.SUCCESS);
 
     } catch (error) {
       console.log(`Error scraping ${url}:`, error);
