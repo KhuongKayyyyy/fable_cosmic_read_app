@@ -75,8 +75,32 @@ const insertBook = async ({
     }
 };
 
+const getBookChapters = async (id, page, size) => {
+    page = parseInt(page);
+    size = parseInt(size);
+    try {
+        const book = await Book.findById(id).populate("chapters");
+        return book
+    } catch (error) {
+        console.log("Error getting book chapters by id: ",error.message);
+        throw new Error(error.message);
+    }
+}
+
+const getBookGenres = async (id) => {
+    try{
+        const book = await Book.findById(id).populate("genres");
+        return book
+    }catch(error){
+        console.log("Error getting book genres: ",error.message);
+        throw new Error(error.message);
+    }
+}
+
 export default {
     getAllBook,
     getBookById,
     insertBook,
-};
+    getBookChapters,
+    getBookGenres,
+}

@@ -1,3 +1,4 @@
 import bookRouter from './book.js';
-
-export {bookRouter};
+import genreRouter from './genre.js';
+import chapterRouter from './chapter.js';
+export {bookRouter, genreRouter,chapterRouter};

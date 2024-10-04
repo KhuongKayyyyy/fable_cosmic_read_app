@@ -1,7 +1,7 @@
 import puppeteer from 'puppeteer';
 import mongoose from 'mongoose';
 import connect from '../database/database.js';
-import { Book, Chapter } from '../models/index.js';
+import { Book, Chapter,Genre } from '../models/index.js';
 import { print, OutPutType } from '../helpers/print.js';
 import { bookRepository } from '../repositories/index.js';
 import dotenv from 'dotenv';
@@ -24,9 +24,55 @@ const cosmicList = [
   "https://nettruyenviet.com/truyen-tranh/dai-tieu-thu-sao-phai-gia-nam",
   "https://nettruyenviet.com/truyen-tranh/naruto"
 ];
+const genres = [
+  "Action",
+  "Adventure",
+  "Anime",
+  "Chuyển Sinh",
+  "Comedy",
+  "Comic",
+  "Cooking",
+  "Doujinshi",
+  "Drama",
+  "Fantasy",
+  "Gender Bender",
+  "Historical",
+  "Horror",
+  "Live action",
+  "Manga",
+  "Manhua",
+  "Manhwa",
+  "Martial Arts",
+  "Mystery",
+  "Mecha",
+  "Romance",
+  "School Life",
+  "Sci-fi",
+  "Shoujo",
+  "Shoujo Ai",
+  "Shounen",
+  "Shounen Ai",
+  "Slice of Life",
+  "Sports",
+  "Supernatural",
+  "Thiếu nhi",
+  "Tragedy",
+  "Trinh thám",
+  "Truyện scan",
+  "Truyện màu",
+  "Webtoon",
+  "Xuyên Không",
+];
 
 (async () => {
   await connect();
+
+  try {
+    await Genre.insertMany(genres.map(genre => ({name: genre})));
+    console.log("Genres inserted successfully");
+  }catch{
+      console.log("Error inserting genres");
+  }
   // Launch a new browser instance
   const browser = await puppeteer.launch();
 

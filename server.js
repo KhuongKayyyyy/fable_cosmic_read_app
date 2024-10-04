@@ -3,7 +3,7 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 // routes import
-import {bookRouter} from './routes/index.js';
+import {bookRouter,genreRouter,chapterRouter} from './routes/index.js';
 
 import connect from './database/database.js';
 
@@ -14,7 +14,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/books', bookRouter);
-
+app.use('/genres', genreRouter);
+app.use('/chapters', chapterRouter);
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });

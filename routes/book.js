@@ -10,6 +10,14 @@ router.get("/:id", (req, res) => {
     bookController.getBookById(req, res);
 });
 
+router.get("/:id/chapters", (req, res) => {
+    bookController.getBookChapters(req, res);
+});
+
+router.get("/:id/genres",(req,res)=>{
+    bookController.getBookGenres(req,res);
+});
+
 router.post("/", (req, res) => {
     res.send("You submitted a new book");
 });
@@ -17,4 +25,5 @@ router.post("/", (req, res) => {
 router.put("/:id", (req, res) => {
     res.send(`You updated the book with id ${req.params.id}`);
 });
+
 export default router;

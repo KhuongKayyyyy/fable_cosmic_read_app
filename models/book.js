@@ -12,7 +12,7 @@ const bookSchema = new mongoose.Schema({
     },
     genres: {
         type: [String],
-        required: true
+        ref: 'Genre'
     },
     viewCount: {
         type: Number,
@@ -29,7 +29,7 @@ const bookSchema = new mongoose.Schema({
     },
     chapters: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Chapter' // Reference to the Chapter model
+        ref: 'Chapter'
     }]
 }, {
     timestamps: true
