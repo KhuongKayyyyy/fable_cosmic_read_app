@@ -6,7 +6,6 @@ import { print, OutPutType } from '../helpers/print.js';
 import { bookRepository } from '../repositories/index.js';
 import dotenv from 'dotenv';
 import chapterCrawler  from './chapterCrawler.js'; 
-import book from '../repositories/book.js';
 dotenv.config();
 
 const cosmicList = [

@@ -9,6 +9,10 @@ const chapterSchema = new mongoose.Schema({
     pages: {
         type: [String],  // Array of strings to represent the list of image URLs or paths
         required: true,  // At least one image is required
+    },
+    book: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Book',
     }
 }, {
     timestamps: true  // Automatically creates `createdAt` and `updatedAt` fields

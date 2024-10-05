@@ -10,10 +10,10 @@ const bookSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    genres: {
-        type: [String],
-        ref: 'Genre'
-    },
+    genres: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Genre' 
+    }],    
     viewCount: {
         type: Number,
         default: 0

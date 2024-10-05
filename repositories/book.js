@@ -45,7 +45,7 @@ const getBookById = async (id) => {
 const insertBook = async ({
     name,
     thumbnail,
-    genre,
+    genres,
     viewCount,
     author,
     status,
@@ -60,7 +60,7 @@ const insertBook = async ({
         const book = new Book({
             name,
             thumbnail,
-            genre,
+            genres,
             viewCount: parseInt(viewCount) || 0,
             author,
             status: status || "Đang tiến hành",
