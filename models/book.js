@@ -18,13 +18,21 @@ const bookSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
+    likeCount: {
+        type: Number,
+        default: 0
+    },
+    followCount: {
+        type: Number,
+        default: 0
+    },
     author: {
         type: String,
         required: true
     },
     status: {
         type: String,
-        enum: ['Hoàn Thành', 'Đang tiến hành', 'Tạm ngưng'],
+        // enum: ['Hoàn Thành', 'Đang Cập Nhật', 'Tạm ngưng'],
         required: true
     },
     chapters: [{
