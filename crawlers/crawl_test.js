@@ -93,6 +93,7 @@ const cosmicList = [
         const titleElement = document.querySelector('h1[itemprop="name"]');
         const authorElement = document.querySelector(".author .col-xs-9 a");
         const statusElement = document.querySelector(".status .col-xs-9");
+        const introduction = document.querySelector('.story-detail-info p');
         const likeCountElement = document.querySelector(".number-like");
         const followCountElement = document.querySelector(
           ".row:nth-child(4) .col-xs-9"
@@ -110,6 +111,7 @@ const cosmicList = [
           thumbnail: imgElement ? imgElement.src : null,
           author: authorElement ? authorElement.textContent.trim() : null,
           status: statusElement ? statusElement.textContent.trim() : null,
+          introduction: introduction ? introduction.textContent.trim() : null,
           likes: likeCountElement
             ? parseInt(likeCountElement.textContent.trim().replace(/,/g, ""))
             : 0,
@@ -141,6 +143,7 @@ const cosmicList = [
         thumbnail: bookInfo.thumbnail,
         genres: genreList,
         author: bookInfo.author,
+        introduction: bookInfo.introduction,
         viewCount: bookInfo.views,
         likeCount: bookInfo.likes,
         followCount: bookInfo.follows,

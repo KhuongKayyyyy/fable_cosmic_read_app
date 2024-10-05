@@ -50,6 +50,7 @@ const insertBook = async ({
     likeCount,
     followCount,
     author,
+    introduction,
     status,
     chapters,
 }) => {
@@ -67,6 +68,7 @@ const insertBook = async ({
             likeCount: parseInt(likeCount) || 0,
             followCount: parseInt(followCount) || 0,
             author,
+            introduction,
             status: status || "Đang tiến hành",
             chapters,
         });
