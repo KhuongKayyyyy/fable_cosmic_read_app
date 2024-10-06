@@ -18,8 +18,12 @@ router.get("/:id/genres",(req,res)=>{
     bookController.getBookGenres(req,res);
 });
 
+router.get("/genre/:genre",(req,res)=>{
+    bookController.getBookByGenre(req,res);
+});
+
 router.post("/", (req, res) => {
-    res.send("You submitted a new book");
+    bookController.insertBook(req, res);
 });
 
 router.put("/:id", (req, res) => {

@@ -103,10 +103,21 @@ const getBookGenres = async (id) => {
     }
 }
 
+const getBookByGenre = async (genre) => {
+    try{
+        const book = await Book.find({genres: genre});
+        return book
+    }catch(error){
+        console.log("Error getting book by genre: ",error.message);
+        throw new Error(error.message);
+    }
+}
+
 export default {
     getAllBook,
     getBookById,
     insertBook,
     getBookChapters,
     getBookGenres,
+    getBookByGenre
 }

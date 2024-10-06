@@ -79,9 +79,25 @@ async function getBookGenres(req, res) {
   }
 }
 
+async function getBookByGenre(req, res) {
+  try {
+    let genre = req.params.genre;
+    let books = await bookRepository.getBookByGenre(genre);
+    res.status(HttpStatusCode.OK).json({
+      message: "Books retrieved successfully",
+      data: books,
+    });
+  }catch (error) {
+    res
+      .status(HttpStatusCode.INTERNAL_SERVER_ERROR)
+      .send({ message: error.message });
+  }
+}
+
 export default {
   getAllBook,
   getBookById,
   getBookChapters,
   getBookGenres,
+  getBookByGenre,
 };
