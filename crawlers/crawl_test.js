@@ -70,12 +70,12 @@ const cosmicList = [
   // "https://truyenqqto.com/truyen-tranh/toi-chuyen-vang-tai-mat-the-16020",
   // "https://truyenqqto.com/truyen-tranh/blame-master-edition-15766"
   // "https://truyenqqto.com/truyen-tranh/toi-la-hoc-sinh-hang-d-16155",
-  "https://truyenqqto.com/truyen-tranh/reborn-nguoi-dao-tao-sat-thu-13539",
-  "https://truyenqqto.com/truyen-tranh/naruto-197",
-  "https://truyenqqto.com/truyen-tranh/witch-hunter-225",
-  "https://truyenqqto.com/truyen-tranh/the-promised-neverland-2547",
-  "https://truyenqqto.com/truyen-tranh/cao-thu-bong-ro-remake-14065",
-  "https://truyenqqto.com/truyen-tranh/haikyuu-526"
+  // "https://truyenqqto.com/truyen-tranh/reborn-nguoi-dao-tao-sat-thu-13539",
+  // "https://truyenqqto.com/truyen-tranh/naruto-197",
+  // "https://truyenqqto.com/truyen-tranh/witch-hunter-225",
+  // "https://truyenqqto.com/truyen-tranh/the-promised-neverland-2547",
+  // "https://truyenqqto.com/truyen-tranh/cao-thu-bong-ro-remake-14065",
+  // "https://truyenqqto.com/truyen-tranh/haikyuu-526"
 
 ];
 

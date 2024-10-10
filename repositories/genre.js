@@ -1,16 +1,34 @@
 import { print, OutPutType } from "../helpers/print.js";
 import Genre from "../models/genre.js";
-const getAllGenre = async (searchString ='') => {
-  if (searchString) {
-    try {
-      return await Genre.findOne({name: { $regex: searchString, $options: 'i' }});
-    } catch (error) {
-      print("Repository: " + error.message, OutPutType.ERROR);
-      throw new Error(error.message);
-    }
-  }
+const getAllGenre = async (page, size, searchString = '') => {
+  page = parseInt(page);
+  size = parseInt(size);
+  
+  const skip = (page - 1) * size;
+
   try {
-    return await Genre.find();
+    if (searchString) {
+      let filteredGenre = await Genre.aggregate([
+        {
+          $match: { name: { $regex: searchString, $options: "i" } },
+        },
+        {
+          $skip: skip,
+        },
+        {
+          $limit: size,
+        },
+      ]);
+
+      let total = await Genre.countDocuments({ name: { $regex: searchString, $options: "i" } });
+      
+      return { genres: filteredGenre, total: total };
+    } else {
+      let genres = await Genre.find().skip(skip).limit(size);
+      let total = await Genre.countDocuments(); // Get total number of genres
+
+      return { genres: genres, total: total };
+    }
   } catch (error) {
     print("Repository: " + error.message, OutPutType.ERROR);
     throw new Error(error.message);
