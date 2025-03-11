@@ -3,7 +3,7 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 // routes import
-import {bookRouter,genreRouter,chapterRouter,userRouter, libraryRouter} from './routes/index.js';
+import {bookRouter,genreRouter,chapterRouter,userRouter, libraryRouter,continueReadingRouter} from './routes/index.js';
 
 import connect from './database/database.js';
 import checkToken from './authentication/auth.js';
@@ -21,6 +21,7 @@ app.use('/books', bookRouter);
 app.use('/genres', genreRouter);
 app.use('/chapters', chapterRouter);
 app.use('/library', libraryRouter);
+app.use('/continue-reading', continueReadingRouter);
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
