@@ -113,11 +113,25 @@ const getBookByGenre = async (genre) => {
     }
 }
 
+const getBookByName = async (name) => {
+    try {
+        const book = await Book.find({ name: { $regex: name, $options: "i" } });
+        if (!book) {
+            throw new Error("Book not found");
+        }
+        return book;
+    } catch (error) {
+        console.log("Error getting book by name:", error.message);
+        throw new Error(error.message);
+    }
+};
+
 export default {
     getAllBook,
     getBookById,
     insertBook,
     getBookChapters,
     getBookGenres,
-    getBookByGenre
+    getBookByGenre,
+    getBookByName,
 }

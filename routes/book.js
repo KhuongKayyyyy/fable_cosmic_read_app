@@ -30,4 +30,8 @@ router.put("/:id", (req, res) => {
     res.send(`You updated the book with id ${req.params.id}`);
 });
 
+router.get("/search/:name", (req, res) => {
+    bookController.getBookByName(req, res);
+});
+
 export default router;

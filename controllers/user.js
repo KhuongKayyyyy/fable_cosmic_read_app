@@ -46,7 +46,23 @@ const register = async (req, res) => {
     res.status(500).send({ message: error.message });
   }
 }
+
+const getUserById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await userRepository.getUserById(id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json({message: "User found", data: user });
+  } catch (error) {
+    print("Controller error: " + error.message, OutPutType.ERROR);
+    res.status(500).send({ message: error.message });
+  }
+};
 export default{
     login,
-    register
+    register,
+    getUserById,
 }

@@ -1,19 +1,19 @@
 import jwt from "jsonwebtoken";
 
 export default function checkToken(req, res, next) {
-  const allowedPaths = [
-    "/user/login",
-    "/user/register",
-    "/books",
-    "/genres",
-    "/chapters",
-  ];
+  const allowedPaths = ["/user/login", "/user/register"];
 
-  // Bypass login and register
-  if (allowedPaths.includes(req.path.toLowerCase())) {
+  const isAllowedPath =
+    allowedPaths.includes(req.path.toLowerCase()) ||
+    req.path.toLowerCase().startsWith("/books") ||
+    req.path.toLowerCase().startsWith("/genres") ||
+    req.path.toLowerCase().startsWith("/chapters");
+
+  // Bypass token check for the allowed paths
+  if (isAllowedPath) {
     next();
     return;
-}
+  }
 
   // Get and validate the token
   const token = req.headers.authorization?.split(" ")[1];

@@ -62,7 +62,25 @@ const register = async ({ name, email, password }) => {
   }
 };
 
+const getUserById = async (id) => {
+  try {
+    let user = await User.findById(id).exec();
+    if (!user) {
+      print("User not found", OutPutType.ERROR);
+      throw new Error("User not found");
+    }
+    return {
+      ...user.toObject(),
+      password: "Not shown",
+    };
+  } catch (error) {
+    print("Repository error: " + error.message, OutPutType.ERROR);
+    throw new Error("Error while getting user: " + error.message);
+  }
+};
+
 export default {
   login,
   register,
+  getUserById,
 };
