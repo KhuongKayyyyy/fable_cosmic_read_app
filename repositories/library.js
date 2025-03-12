@@ -85,9 +85,29 @@ const clearLibrary = async (userId) => {
     }
 };
 
+
+/**
+ * Check if a book is in the user's library.
+ */
+const isBookInLibrary = async (userId, bookId) => {
+    try {
+        const library = await Library.findOne({ user: userId });
+
+        if (!library) {
+            throw new Error("Library not found");
+        }
+
+        return library.books.includes(bookId);
+    } catch (error) {
+        console.log("Error checking if book is in library:", error.message);
+        throw new Error(error.message);
+    }
+};
+
 export default {
     getLibraryByUserId,
     addBookToLibrary,
     removeBookFromLibrary,
-    clearLibrary
+    clearLibrary,
+    isBookInLibrary
 };

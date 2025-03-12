@@ -55,9 +55,24 @@ async function clearLibrary(req, res) {
   }
 }
 
+async function isBookInLibrary(req, res) {
+  try {
+    let userId = req.params.userId;
+    let bookId = req.params.bookId;
+    let isInLibrary = await libraryRepository.isBookInLibrary(userId, bookId);
+    res.status(HttpStatusCode.OK).json({
+      message: "Book presence checked successfully",
+      data: isInLibrary,
+    });
+  } catch (error) {
+    res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).send({ message: error.message });
+  }
+}
+
 export default {
   getUserLibrary,
   addBookToLibrary,
   removeBookFromLibrary,
   clearLibrary,
+  isBookInLibrary,
 };

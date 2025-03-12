@@ -22,13 +22,13 @@ async function getContinueReading(req, res) {
 async function addChapter(req, res) {
   try {
     const { userId } = req.params;
-    const { chapterId } = req.body;
+    const { bookId, chapterId } = req.body;
 
-    if (!chapterId) {
-      return res.status(HttpStatusCode.BAD_REQUEST).json({ message: "Chapter ID is required" });
+    if (!bookId || !chapterId) {
+      return res.status(HttpStatusCode.BAD_REQUEST).json({ message: "Book ID and Chapter ID are required" });
     }
 
-    const updatedData = await continueReadingRepository.addChapterToContinueReading(userId, chapterId);
+    const updatedData = await continueReadingRepository.addChapterToContinueReading(userId, bookId, chapterId);
 
     res.status(HttpStatusCode.CREATED).json({
       message: "Chapter added to continue reading successfully",

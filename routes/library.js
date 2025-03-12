@@ -19,4 +19,7 @@ router.delete("/:userId", (req, res) => {
     libraryController.clearLibrary(req, res);
 });
 
+router.get("/:userId/:bookId", async (req, res) => {
+    await libraryController.isBookInLibrary(req, res);
+});
 export default router;

@@ -8,13 +8,13 @@ const continueReadingSchema = new mongoose.Schema({
         unique: true, 
     },
     chapters: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Chapter",
-        required: true,
+        book: { type: mongoose.Schema.Types.ObjectId, ref: "Book", required: true },
+        chapter: { type: mongoose.Schema.Types.ObjectId, ref: "Chapter", required: true }
     }]
 }, {
     timestamps: true, 
 });
-
-const ContinueReading = mongoose.model("ContinueReading", continueReadingSchema);
-export default ContinueReading;
+  
+  const ContinueReading = mongoose.model("ContinueReading", continueReadingSchema);
+  export default ContinueReading;
+  
