@@ -74,9 +74,30 @@ async function clearContinueReading(req, res) {
   }
 }
 
+async function isBookInContinueReading(req, res) {
+  try {
+    const { userId } = req.params;
+    const { bookId } = req.body;
+
+    if (!bookId) {
+      return res.status(HttpStatusCode.BAD_REQUEST).json({ message: "Book ID is required" });
+    }
+
+    const isInContinueReading = await continueReadingRepository.isBookInContinueReading(userId, bookId);
+
+    res.status(HttpStatusCode.OK).json({
+      message: "Book check in continue reading completed successfully",
+      data: isInContinueReading ,
+    });
+  } catch (error) {
+    res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({ message: error.message });
+  }
+}
+
 export default {
   getContinueReading,
   addChapter,
   removeChapter,
   clearContinueReading,
+  isBookInContinueReading,
 };

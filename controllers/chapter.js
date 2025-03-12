@@ -1,6 +1,6 @@
 import HttpStatusCode from "../exceptions/HttpExceptionCode.js";
 import { print, OutPutType } from "../helpers/print.js";
-import { chapterRepository } from "../repositories/index.js";
+import { bookRepository, chapterRepository } from "../repositories/index.js";
 import { MAX_BOOKS_PER_PAGE } from "../global/constant.js";
 async function getAllChapters(req, res) {
   try {
@@ -36,4 +36,34 @@ async function getChapterById(req, res) {
       .send({ message: error.message });
   }
 }
-export default{ getAllChapters ,getChapterById};
+
+async function getChapterWithBookImage(req, res) {
+  try {
+    let id = req.params.id;
+    let chapter = await chapterRepository.getChapterById(id);
+
+    if (!chapter) {
+      return res.status(HttpStatusCode.NOT_FOUND).json({
+        message: "Chapter not found",
+      });
+    }
+
+    let bookData = await bookRepository.getBookById(chapter.book);
+
+    res.status(HttpStatusCode.OK).json({
+      message: "Chapter with book image retrieved successfully",
+      data: {
+        chapterTitle: chapter.title,
+        bookImage: bookData.thumbnail,
+        bookTitle: bookData.name,
+        bookAuthor: bookData.author,
+      },
+    });
+  } catch (error) {
+    res
+      .status(HttpStatusCode.INTERNAL_SERVER_ERROR)
+      .send({ message: error.message });
+  }
+}
+
+export default{ getAllChapters ,getChapterById,getChapterWithBookImage};
